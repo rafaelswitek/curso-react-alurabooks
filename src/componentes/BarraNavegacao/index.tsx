@@ -1,7 +1,5 @@
-import { useEffect, useState } from "react"
-import { Link, useNavigate } from "react-router-dom"
-import http from "../../http"
-import { ICategoria } from "../../interfaces/ICategoria"
+import { useState } from "react"
+import { Link } from "react-router-dom"
 import BotaoNavegacao from "../BotaoNavegacao"
 import ModalCadastroUsuario from "../ModalCadastroUsuario"
 import ModalLoginUsuario from "../ModalLoginUsuario"
@@ -13,33 +11,46 @@ const BarraNavegacao = () => {
 
     const [modalCadastroAberta, setModalCadastroAberta] = useState(false)
     const [modalLoginAberta, setModalLoginAberta] = useState(false)
-
-    const [categorias, setCategorias] = useState<ICategoria[]>([])
-
-    useEffect(() => {
-        http.get<ICategoria[]>('categorias')
-            .then(resposta => {
-                console.log(resposta.data)
-                setCategorias(resposta.data)
-            })
-    }, [])
-
-    let navigate = useNavigate();
-
-    const token = sessionStorage.getItem('token')
-
-    const [usuarioEstaLogado, setUsuarioEstaLogado] = useState<boolean>(token != null)
+    const [usuarioEstaLogado, setUsuarioEstaLogado] = useState(false)
 
     const aoEfetuarLogin = () => {
-        setModalLoginAberta(false)
         setUsuarioEstaLogado(true)
+        setModalLoginAberta(false)
     }
 
-    const efetuarLogout = () => {
-        setUsuarioEstaLogado(false)
-        sessionStorage.removeItem('token')
-        navigate('/')
-    }
+    const acoesQuandoDeslogado = (<>
+        <li>
+            <BotaoNavegacao
+                texto="Login"
+                textoAltSrc="Icone representando um usuário"
+                imagemSrc={usuario}
+                onClick={() => setModalLoginAberta(true)}
+            />
+            <ModalLoginUsuario
+                aberta={modalLoginAberta}
+                aoFechar={() => setModalLoginAberta(false)}
+                aoEfetuarLogin={aoEfetuarLogin}
+            />
+        </li>
+        <li>
+            <BotaoNavegacao
+                texto="Cadastrar-se"
+                textoAltSrc="Icone representando um usuário"
+                imagemSrc={usuario}
+                onClick={() => setModalCadastroAberta(true)}
+            />
+            <ModalCadastroUsuario
+                aberta={modalCadastroAberta}
+                aoFechar={() => setModalCadastroAberta(false)}
+            />
+        </li>
+    </>)
+
+    const acoesQuandoLogado = (<>
+        <li>
+            <Link to="/minha-conta/pedidos">Minha Conta</Link> 
+        </li>
+    </>)
 
     return (<nav className="ab-navbar">
         <h1 className="logo">
@@ -51,58 +62,37 @@ const BarraNavegacao = () => {
             <li>
                 <a href="#!">Categorias</a>
                 <ul className="submenu">
-                    {categorias.map(categoria => (<li key={categoria.id}>
-                        <Link to={`/categorias/${categoria.slug}`}>
-                            {categoria.nome}
+                    <li>
+                        <Link to="/">
+                            Frontend
                         </Link>
-                    </li>))}
+                    </li>
+                    <li>
+                        <Link to="/">
+                            Programação
+                        </Link>
+                    </li>
+                    <li>
+                        <Link to="/">
+                            Infraestrutura
+                        </Link>
+                    </li>
+                    <li>
+                        <Link to="/">
+                            Business
+                        </Link>
+                    </li>
+                    <li>
+                        <Link to="/">
+                            Design e UX
+                        </Link>
+                    </li>
                 </ul>
             </li>
         </ul>
         <ul className="acoes">
-            {!usuarioEstaLogado && (<>
-                <li>
-                    <BotaoNavegacao
-                        texto="Login"
-                        textoAltSrc="Icone representando um usuário"
-                        imagemSrc={usuario}
-                        onClick={() => setModalLoginAberta(true)}
-                    />
-                    <ModalLoginUsuario
-                        aberta={modalLoginAberta}
-                        aoFechar={() => setModalLoginAberta(false)}
-                        aoEfetuarLogin={aoEfetuarLogin}
-                    />
-                </li>
-                <li>
-                    <BotaoNavegacao
-                        texto="Cadastrar-se"
-                        textoAltSrc="Icone representando um usuário"
-                        imagemSrc={usuario}
-                        onClick={() => setModalCadastroAberta(true)}
-                    />
-                    <ModalCadastroUsuario
-                        aberta={modalCadastroAberta}
-                        aoFechar={() => setModalCadastroAberta(false)}
-                    />
-                </li>
-            </>)}
-            {usuarioEstaLogado &&
-                <>
-                    <li>
-                        <Link to="/minha-conta/pedidos">Minha conta</Link>
-                    </li>
-                    <li>
-                        <BotaoNavegacao 
-                            texto="Logout"
-                            textoAltSrc="Icone representando um usuário"
-                            imagemSrc={usuario}
-                            onClick={efetuarLogout}
-                        />
-                    </li>
-                </>
-            }
-        </ul>
+            {usuarioEstaLogado ? acoesQuandoLogado : acoesQuandoDeslogado}
+        </ul>   
     </nav>)
 }
 
