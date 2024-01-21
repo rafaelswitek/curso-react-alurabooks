@@ -58,7 +58,8 @@ const CarrinhoProvider = ({ children } : CarrinhoProviderProps) => {
             value={{ 
                 carrinho: data?.carrinho, 
                 adicionarItemCarrinho,
-                removerItemCarrinho
+                removerItemCarrinho,
+                carregando: loadingCarrinho || loadingAdiciona
             }}
         >
             {children}
