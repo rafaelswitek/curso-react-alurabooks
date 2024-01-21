@@ -64,7 +64,7 @@ const Livro = () => {
                         <p><strong>*Você terá acesso às futuras atualizações do livro.</strong></p>
                         <footer>
                             <div className="qtdContainer">
-                                <AbInputQuantidade />
+                                <AbInputQuantidade value={1} onChange={() => console.log('teste')} />
                             </div>
                             <div>
                                 <AbBotao texto="Comprar" />
