@@ -4045,7 +4045,7 @@ dotenv@^10.0.0:
   resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-10.0.0.tgz#3d4227b8fb95f81096cdd2b66653fb2c7085ba81"
   integrity sha512-rlBi9d8jpv9Sf1klPjNfFAuWDjKLwTIJJ/VxtoTwIR6hnZxcEOQCZg2oIL3MWBYw5GpUDKOEnND7LXTbIpQ03Q==
 
-ds-alurabooks@^0.5.2:
+ds-alurabooks@^0.5.5:
   version "0.5.7"
   resolved "https://registry.yarnpkg.com/ds-alurabooks/-/ds-alurabooks-0.5.7.tgz#e7da1e8f9c1cc00fad85cbf2da33637fc43f418b"
   integrity sha512-VdxfEZWD/rn3ecFXpYKR8wEursiYT3lwr6RDyAW1cWJIRORPgKj6Br12SfMwTESkWplLYZ2diLlnnc3URwiB7A==
