@@ -23,10 +23,6 @@ const ListaLivros = ({ categoria }: ListaLivrosProps) => {
         })
     }, [textoBusca])
 
-    filtroLivrosVar({
-        ...filtroLivrosVar(),
-        categoria,
-    })
     
     const livros = useReactiveVar(livrosVar);
 
