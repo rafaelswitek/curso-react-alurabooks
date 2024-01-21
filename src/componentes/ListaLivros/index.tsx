@@ -16,21 +16,26 @@ const ListaLivros = ({ categoria }: ListaLivrosProps) => {
 
     const [textoBusca, setTextoDaBusca] = useState('')
 
+
+    filtroLivrosVar({
+        ...filtroLivrosVar(),
+        categoria,
+    })
     useEffect(() => {
         filtroLivrosVar({
             ...filtroLivrosVar(),
-            titulo: textoBusca.length >= 3 ? textoBusca : ''
+            titulo: textoBusca.length >= 3 ? textoBusca : '',
+            categoria
         })
     }, [textoBusca])
 
-    
     const livros = useReactiveVar(livrosVar);
 
     useLivros()
 
     return <section>
         <form style={{ maxWidth: '80%', margin: '0 auto', textAlign: 'center' }}>
-            <AbCampoTexto value={textoBusca} onChange={setTextoDaBusca} placeholder='Digite o título'/>
+            <AbCampoTexto value={textoBusca} onChange={setTextoDaBusca} placeholder='Digite o título' />
         </form>
         <div className="livros">
             {livros.map(livro => <CardLivro livro={livro} key={livro.id} />)}
